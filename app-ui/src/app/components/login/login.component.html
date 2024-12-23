@@ -5,15 +5,18 @@
                 <div class="card">
                     <div class="card-body">
                         <h1 class="card-title text-center">Login</h1>
+                        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                             <mdb-form-control class="mt-4">
-                                <input mdbInput type="text" id="username" class="form-control" />
+                                <input mdbInput formControlName="email" type="text" id="email" class="form-control" />
                                 <label mdbLabel class="form-label" for="form1">Usuário</label>
                             </mdb-form-control>
                             <mdb-form-control class="mt-4">
-                                <input mdbInput type="text" id="password" class="form-control" />
+                                <input mdbInput type="password" formControlName="password" id="password" class="form-control" />
                                 <label mdbLabel class="form-label" for="form1">Senha</label>
                             </mdb-form-control>
-                            <button type="button" class="btn btn-primary btn-rounded mt-4 w-100" mdbRipple>Entrar</button>
+                            <button [disabled]="disabled" type="submit" class="btn btn-primary btn-rounded mt-4 w-100"
+                                mdbRipple>Entrar</button>
+                        </form>
                     </div>
                 </div>
             </div>

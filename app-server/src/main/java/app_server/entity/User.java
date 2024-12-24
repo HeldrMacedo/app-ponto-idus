@@ -2,9 +2,12 @@ package app_server.entity;
 
 import java.util.List;
 
+import app_server.enums.WorkRegime;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,9 +37,11 @@ public class User {
 	@Column(unique = true)
 	private String email;
 	private String password;
+	@Enumerated(EnumType.STRING)
+	private WorkRegime regime;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(name="users_roles", joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name="role_id"))
-	private List<Role> roles;
+	private List<Role> roles;	
 	
 }

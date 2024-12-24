@@ -11,14 +11,10 @@ export class AuthGuardService {
   loginService = inject(LoginService);
   routes = 
     {
-      'ROLE_ADMINISTRATOR': ['/dashboard/admin'],
+      'ROLE_ADMINISTRATOR': ['/dashboard/admin', '/dashboard/register'],
       'ROLE_USER': ['/dashboard/home']
    };
-  constructor(private router: Router) {
-    console.log(this.loginService.hasPermission('ROLE_ADMINISTRATOR'));
-    console.log(this.loginService.hasPermission('ROLE_USER'));
-
-  }
+  constructor(private router: Router) { }
 
 
   canActivate(

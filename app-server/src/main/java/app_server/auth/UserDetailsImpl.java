@@ -41,7 +41,11 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public String getUsername() {
         return user.getEmail();
-    } 
+    }
+    
+    public Long getId() {
+    	return user.getId();
+    }
 
     @Override
     public boolean isAccountNonExpired() {

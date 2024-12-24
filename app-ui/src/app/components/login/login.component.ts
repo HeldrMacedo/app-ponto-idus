@@ -1,10 +1,11 @@
-import { Component, Inject } from '@angular/core';
-import { Form, FormControl, FormGroup, FormsModule, MinLengthValidator, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component} from '@angular/core';
+import {  FormControl, FormGroup, FormsModule, MinLengthValidator, ReactiveFormsModule, Validators } from '@angular/forms';
 import {MdbFormsModule} from "mdb-angular-ui-kit/forms";
-import { min } from 'rxjs';
+
 import { login } from '../../types/login';
 import { LoginService } from '../../services/login.service';
-import { Toast, ToastrService } from 'ngx-toastr';
+import {  ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,8 @@ export class LoginComponent {
 
   constructor( 
     private loginService: LoginService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private router: Router
   ) {
     this.loginForm = new FormGroup({
       email: new FormControl('',[Validators.required, Validators.email]),
@@ -45,9 +47,15 @@ export class LoginComponent {
     this.loginService.login(this.login)
       .subscribe({
         next: (token) => {
-          this.loginService.addToken(token);
-          this.loginService.addName(this.login.email);
-          this.toastrService.success('Logado com sucesso')
+          let credentialTokenJson = JSON.parse(token); 
+          this.loginService.addToken(credentialTokenJson.token);
+          this.loginService.addName(credentialTokenJson.name);
+          this.toastrService.success('Logado com sucesso');
+          if (this.loginService.hasPermission('ROLE_ADMINISTRATOR')){
+            this.router.navigate(['/dashboard/admin']);
+          }else {
+            this.router.navigate(['/dashboard/home']);
+          }
         
         },
         error: () => this.toastrService.error('Erro ao logar'),

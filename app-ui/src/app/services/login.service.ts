@@ -46,7 +46,7 @@ export class LoginService {
 
   hasPermission(role: string) {
     let user = this.jwtDecode() as Ususario;
-    if (user.role == role)
+    if (user.role.includes(role))
       return true;
     else
       return false;
